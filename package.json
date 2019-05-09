@@ -2,8 +2,9 @@
   "name": "SMS-Management-Application-API",
   "version": "1.0.0",
   "description": "SMS Management Application API",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "nodemon --exec babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/dessHub/SMS-Management-Application-API/issues"
   },
-  "homepage": "https://github.com/dessHub/SMS-Management-Application-API#readme"
+  "homepage": "https://github.com/dessHub/SMS-Management-Application-API#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
+    "nodemon": "^1.19.0"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
