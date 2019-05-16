@@ -4,7 +4,9 @@
   "description": "SMS Management Application API",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node server.js",
+    "start": "NODE_ENV=development DEBUG=log nodemon --exec babel-node server.js",
+    "db:migrate": "node_modules/.bin/sequelize db:migrate",
+    "db:rollup": "node_modules/.bin/sequelize db:migrate:undo:all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +27,13 @@
     "nodemon": "^1.19.0"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "hoek": "^6.1.3",
+    "joi": "^14.3.1",
+    "morgan": "^1.9.1",
+    "pg": "^7.10.0",
+    "sequelize": "^5.8.5"
   }
 }
