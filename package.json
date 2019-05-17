@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=development DEBUG=log nodemon --exec babel-node server.js",
+    "pretest": "NODE_ENV=test npm run db:migrate",
+    "test": "NODE_ENV=test jest --no-cache  --detectOpenHandles --runInBand --forceExit",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:rollup": "node_modules/.bin/sequelize db:migrate:undo:all",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,6 +26,7 @@
     "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
+    "jest": "^24.8.0",
     "nodemon": "^1.19.0"
   },
   "dependencies": {
@@ -35,5 +38,23 @@
     "morgan": "^1.9.1",
     "pg": "^7.10.0",
     "sequelize": "^5.8.5"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "app/**/*.{js,jsx}",
+      "lib/**/*.{js,jsx}",
+      "!server.js",
+      "!node_modules/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/config",
+      "<rootDir>/database/migrations",
+      "<rootDir>/database/seeders",
+      "<rootDir>/database/models/index.js"
+    ],
+    "setupFilesAfterEnv": [
+      "./test_setup.js"
+    ]
   }
 }
