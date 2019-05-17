@@ -1,12 +1,11 @@
 import models from '../models';
 
+const { Contact, Sms } = models;
 let contactController = {};
 
 contactController.list = (req, res) => {
   return models.Contact
-  .findAll({
-    order: ['createdAt', 'DESC'],
-  })
+  .findAll()
   .then((contacts) => res.status(200).send(contacts))
   .catch(error => res.status(400).send(error));
 };
