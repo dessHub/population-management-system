@@ -11,4 +11,16 @@ contactController.list = (req, res) => {
   .catch(error => res.status(400).send(error));
 };
 
+contactController.create = (req, res) => {
+  const phone = req.body.phone_number;
+  const name = req.body.name;
+  return models.Contact
+  .create({
+     phone,
+     name,
+  })
+  .then(contact => res.status(201).send(contact))
+  .catch(errot => res.status(400).send(error));
+};
+
 module.exports = contactController;
