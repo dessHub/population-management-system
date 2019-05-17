@@ -9,14 +9,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     }
-  }, {});
+  }, {
+    tableName: 'contacts',
+  });
   Contact.associate = function(models) {
-    Contact.hsMany(models.Sms, {
+    Contact.hasMany(models.Sms, {
       onDelete: 'CASCADE',
       foreignKey: 'sender_id',
       hooks: true
     });
-    Contact.hsMany(models.Sms, {
+    Contact.hasMany(models.Sms, {
       onDelete: 'CASCADE',
       foreignKey: 'receiver_id',
       hooks: true
