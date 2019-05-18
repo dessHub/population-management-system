@@ -16,11 +16,13 @@ module.exports = (sequelize, DataTypes) => {
     Contact.hasMany(models.Sms, {
       onDelete: 'CASCADE',
       foreignKey: 'sender_id',
+      as: 'outbox',
       hooks: true
     });
     Contact.hasMany(models.Sms, {
       onDelete: 'CASCADE',
       foreignKey: 'receiver_id',
+      as: 'inbox',
       hooks: true
     });
   };

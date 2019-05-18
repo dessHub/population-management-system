@@ -1,11 +1,13 @@
-function letterCount(str, char) {
-  let count = 0;
-  for (let letter of str) {
-    if (letter === char) {
-      count++;
-    }
-  }
-  return count;
-}
 
-module.exports = letterCount;
+
+export const getContactByPhone = async (model, phone) => {
+  try{
+    const contact = await model.findOne({
+      where: { phone }
+    });
+    return contact ? contact : null;
+  }
+  catch(error) {
+    throw new Error(error);
+  }
+}

@@ -1,12 +1,16 @@
 import express from 'express';
-import contactController from '../controllers/contacts';
+import controller from '../controllers';
 
 const router = express.Router();
 
 router.get("/", (req, res) => res.send("This SMS management App, refer docs on how to use."));
 
-router.get('/contacts', contactController.list);
-router.post('/contacts', contactController.create);
+router.get('/contacts', controller.listContacts);
+router.get('/contacts/:id', controller.getContactById);
+router.post('/contacts', controller.createContact);
 
+// sms endpoints
+router.get('/sms', controller.listSms);
+router.post('/sms', controller.createSms);
 
 module.exports = router;
