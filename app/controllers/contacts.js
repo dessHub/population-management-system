@@ -19,7 +19,7 @@ contactController.create = (req, res) => {
      name,
   })
   .then(contact => res.status(201).send(contact))
-  .catch(errot => res.status(400).send(error));
+  .catch(error => res.status(400).send(error));
 };
 
 module.exports = contactController;
