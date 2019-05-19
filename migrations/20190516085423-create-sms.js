@@ -14,6 +14,14 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+      sender_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+      },
+      receiver_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
