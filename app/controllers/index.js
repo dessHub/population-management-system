@@ -53,6 +53,24 @@ controller.createContact = (req, res) => {
   .catch(error => res.status(400).send(error));
 };
 
+// Delete contact and associated sms
+controller.deleteContact = (req, res) => {
+  // check if contact exist
+  // delete contact if exist
+  const id = req.params.id;
+  return Contact.findByPk(id)
+  .then(contact => {
+    if(!contact) return res.status(404).send({
+      "message": `Contact with Id ${id} is not found!`
+    });
+
+    return contact.destroy()
+    .then(() => res.status(404).send("Successfully deleted."))
+    .catch(error => res.status(400).send(error))
+  })
+  .catch(error => res.status(400).send(error))
+}
+
 // Get sms by Id
 controller.getSmsById= async (req, res) => {
   const id = req.params.id;
@@ -106,8 +124,21 @@ controller.createSms = async (req, res) => {
      message: req.body.message,
      status: "New"
    })
-   .then(sms => res.status(201).send({"status": "Message sent", "sms": sms}))
+   .then(sms => res.status(201).send({'status': "Message sent", "sms": sms}))
    .catch(error => res.status(400).send(error));
 }
+
+// Delete sms
+controller.deleteSms = (req, res) => {
+  return Sms.findByPk(req.params.id)
+  .then(sms => {
+    if(!sms) return res.status(404).send({"message": `Sms with id ${req.params.id} doesn't exist!`});
+
+    return sms.destroy()
+    .then(() => res.status(404).send("deleted"))
+    .catch(error => res.status(400).send(error));
+  })
+  .catch(error => res.status(400).send(error));
+};
 
 module.exports = controller;
