@@ -11,6 +11,7 @@ router.post('/contacts', controller.createContact);
 
 // sms endpoints
 router.get('/sms', controller.listSms);
+router.get('/sms/:id', controller.getSmsById);
 router.post('/sms', controller.createSms);
 
 module.exports = router;

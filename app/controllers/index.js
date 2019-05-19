@@ -1,5 +1,5 @@
 import models from '../models';
-import { getContactByPhone } from '../helpers';
+import { getContactByPhone, validateSms, validateContacts, validatePhoneNumber } from '../helpers';
 
 const { Contact, Sms } = models;
 let controller = {};
@@ -13,9 +13,8 @@ controller.listContacts = (req, res) => {
 
 // Get contact by Id
 controller.getContactById = async (req, res) => {
- try{
   const id = req.params.id;
-  const contact = await Contact.findByPk(id, {
+  return await Contact.findByPk(id, {
     include: [{
       model: Sms,
       as: 'outbox',
@@ -26,20 +25,25 @@ controller.getContactById = async (req, res) => {
     }],
   })
   .then(contact => {
-    console.log("gett");
     if(contact){
-      res.status(200).send(contact);
-     } res.status(404).send({"message": `Contact with ID ${id} is not found!`});
-       })
-  .catch(error => res.status(404).send(error)); }
- catch(error){
-   throw new Error(error);
- }
+      return res.status(200).send(contact);
+    }
+    return res.status(404).send({"message": `Contact with ID ${id} is not found!`});
+  })
+  .catch(error => res.status(404).send(error));
 };
 
 controller.createContact = (req, res) => {
+  const validate = validateContacts(req.body);
+
+  if(Object.keys(validate).length){
+    return res.status(400).send(validate);
+  };
+
   const phone = req.body.phone_number;
   const name = req.body.name;
+  if (!validatePhoneNumber(phone)) return res.status(400).send({"message": "phone_number should be 10 digits"});
+
   return Contact
   .create({
      phone,
@@ -47,6 +51,23 @@ controller.createContact = (req, res) => {
   })
   .then(contact => res.status(201).send(contact))
   .catch(error => res.status(400).send(error));
+};
+
+// Get sms by Id
+controller.getSmsById= async (req, res) => {
+  const id = req.params.id;
+  return await Sms.findByPk(id)
+  .then(sms => {
+    if(sms){
+      return sms.update({
+        status: "Received"
+      })
+      .then(() => res.status(200).send(sms))
+      .catch(error => res.status(400).send(error));
+    }
+    return res.status(404).send({"message": `Sms with ID ${id} is not found!`});
+  })
+  .catch(error => res.status(404).send(error));
 };
 
 controller.listSms = (req, res) => {
@@ -57,6 +78,12 @@ controller.listSms = (req, res) => {
 };
 
 controller.createSms = async (req, res) => {
+  const validate = validateSms(req.body);
+
+  if(Object.keys(validate).length) {
+    return res.status(400).send({"message": validate})
+  }
+
   const { sender, receiver, message } = req.body;
   const receiverContact = await getContactByPhone(Contact, receiver)
   const senderContact = await getContactByPhone(Contact, sender);
