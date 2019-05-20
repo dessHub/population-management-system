@@ -39,7 +39,6 @@ controller.getContactById = async (req, res) => {
 };
 
 controller.createContact = async(req, res) => {
-  console.log("geting here", req.body);
   const validate = validateContacts(req.body);
   if(Object.keys(validate).length){
     return res.status(400).send(validate);
@@ -96,7 +95,13 @@ controller.getSmsById= async (req, res) => {
 controller.listSms = (req, res) => {
   return Sms
    .findAll()
-   .then(sms => res.status(200).send(sms))
+   .then(sms => {
+     console.log("hhhhhhh")
+     if(!sms.length){
+       return res.status(200).send({"message": "No sms yet."});
+     };
+     res.status(200).send(sms);
+   })
    .catch(error => res.status(400).send(error))
 };
 
