@@ -4,10 +4,15 @@ import { getContactByPhone, validateSms, validateContacts, validatePhoneNumber }
 const { Contact, Sms } = models;
 let controller = {};
 
-controller.listContacts = (req, res) => {
-  return Contact
+controller.listContacts = async(req, res) => {
+  return await Contact
   .findAll()
-  .then((contacts) => res.status(200).send(contacts))
+  .then((contacts) => {
+    if(!contacts.length){
+      return res.status(400).send("No contacts yet!");
+    }
+    return res.status(200).send(contacts);
+  })
   .catch(error => res.status(400).send(error));
 };
 
@@ -33,9 +38,9 @@ controller.getContactById = async (req, res) => {
   .catch(error => res.status(404).send(error));
 };
 
-controller.createContact = (req, res) => {
+controller.createContact = async(req, res) => {
+  console.log("geting here", req.body);
   const validate = validateContacts(req.body);
-
   if(Object.keys(validate).length){
     return res.status(400).send(validate);
   };
@@ -44,12 +49,12 @@ controller.createContact = (req, res) => {
   const name = req.body.name;
   if (!validatePhoneNumber(phone)) return res.status(400).send({"message": "phone_number should be 10 digits"});
 
-  return Contact
+  return await Contact
   .create({
      phone,
      name,
   })
-  .then(contact => res.status(201).send(contact))
+  .then(contact => res.status(201).send({"message": "sms created successfully", contact}))
   .catch(error => res.status(400).send(error));
 };
 
