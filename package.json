@@ -4,7 +4,7 @@
   "description": "SMS Management Application API",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=development DEBUG=log nodemon --exec babel-node server.js",
+    "start": "DEBUG=log nodemon --exec babel-node server.js",
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "NODE_ENV=test jest --coverage --no-cache  --detectOpenHandles --runInBand --forceExit",
     "test:coveralls": "nyc --reporter=text-lcov npm test | coveralls",
