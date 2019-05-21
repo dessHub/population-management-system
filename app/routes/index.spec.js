@@ -8,9 +8,7 @@ describe('Test the root path', () => {
         {name: 'test', phone: '0700777888'},
         {name: 'random', phone: '0700888777'},
       ]
-      const payload = [{ sender: '0700777888', receiver: '0700888777', message: 'test message' }];
       await models.Contact.bulkCreate(contacts);
-      await models.Sms.bulkCreate(payload);
     });
     test('It should response the GET method', async() => {
       const response = await request(app).get('/api/contacts');
@@ -36,5 +34,30 @@ describe('Test the root path', () => {
         .set('Content-Type', 'application/json')
         .send(payload)
       expect(JSON.parse(response.text).message).toEqual(`${payload.receiver} doesn't exist, please provide a valid receiver phone number.`)
+    })
+    test('should create sms', async() => {
+      const payload = { sender: '0700777888', receiver: '0700888777', message: 'test message' }
+      const res = await request(app).post('/api/sms')
+        .set('Content-Type', 'application/json')
+        .send(payload)
+     expect(JSON.parse(res.text).status).toEqual('Message sent');
+    })
+    test('should show list sms', async() => {
+      const payload = { sender: '0700777888', receiver: '0700888777', message: 'test message' }
+      await request(app).post('/api/sms')
+        .set('Content-Type', 'application/json')
+        .send(payload)
+     const res = await request(app).get('/api/sms')
+     expect(res.body[0].message).toEqual('test message');
+
+    })
+    test('should get sms by id', async() => {
+      const payload = { sender: '0700777888', receiver: '0700888777', message: 'test message' }
+      await request(app).post('/api/sms')
+        .set('Content-Type', 'application/json')
+        .send(payload)
+        const res = await request(app).get('/api/sms/1')
+     expect(res.body).toEqual('test message');
+
     })
 });
