@@ -1,2 +1,2 @@
-migrate: npm db:migrate
+migrate: npm run db:migrate
 web: npm start
