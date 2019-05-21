@@ -96,7 +96,6 @@ controller.listSms = (req, res) => {
   return Sms
    .findAll()
    .then(sms => {
-     console.log("hhhhhhh")
      if(!sms.length){
        return res.status(200).send({"message": "No sms yet."});
      };
