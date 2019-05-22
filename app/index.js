@@ -12,5 +12,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', routes);
+app.use("*", (req, res) => res.send("This SMS management App, refer to docs(/api) on how to use."));
 
 module.exports = app;

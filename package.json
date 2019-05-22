@@ -45,6 +45,7 @@
     "nyc": "^14.1.1",
     "pg": "^7.10.0",
     "sequelize": "^5.8.5",
+    "swagger-ui-express": "^4.0.4",
     "sequelize-cli": "^5.4.0",
     "nodemon": "^1.18.10"
   },
