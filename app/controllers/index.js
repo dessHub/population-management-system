@@ -48,6 +48,10 @@ controller.createContact = async(req, res) => {
   const name = req.body.name;
   if (!validatePhoneNumber(phone)) return res.status(400).send({"message": "phone_number should be 10 digits"});
 
+  const ifContactExist = await getContactByPhone(Contact, phone);
+
+  if(ifContactExist) return res.status(400).send({"message": "Phone number already exist."});
+
   return await Contact
   .create({
      phone,

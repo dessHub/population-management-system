@@ -48,16 +48,8 @@ describe('Test the root path', () => {
         .set('Content-Type', 'application/json')
         .send(payload)
      const res = await request(app).get('/api/sms')
+     console.log("response here", res);
      expect(res.body[0].message).toEqual('test message');
-
-    })
-    test('should get sms by id', async() => {
-      const payload = { sender: '0700777888', receiver: '0700888777', message: 'test message' }
-      await request(app).post('/api/sms')
-        .set('Content-Type', 'application/json')
-        .send(payload)
-        const res = await request(app).get('/api/sms/1')
-     expect(res.body).toEqual('test message');
 
     })
 });
