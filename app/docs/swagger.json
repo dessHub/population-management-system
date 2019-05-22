@@ -13,7 +13,7 @@
     "https"
   ],
   "paths": {
-    "/contacts": {
+    "/api/contacts": {
       "post": {
         "tags": [
           "contacts"
@@ -63,7 +63,7 @@
         }
       }
     },
-    "/contacts/{contactId}": {
+    "/api/contacts/{contactId}": {
       "get": {
         "tags": [
           "contacts"
@@ -129,7 +129,7 @@
         }
       }
     },
-    "/sms": {
+    "/api/sms": {
       "post": {
         "tags": [
           "sms"
@@ -179,7 +179,7 @@
         }
       }
     },
-    "/sms/{smsId}": {
+    "/api/sms/{smsId}": {
       "get": {
         "tags": [
           "sms"
