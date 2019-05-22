@@ -4,15 +4,16 @@ const joi = require('joi');
 const envVarsSchema = joi
    .object({
       PORT: joi.number().default(8000),
-      DATABASE: joi.string().required(),
-      DATABASE_USER: joi.string().required(),
+      DATABASE: joi.string().default('smsdb'),
+      DATABASE_URL: joi.string().default(null),
+      DATABASE_USER: joi.string().default('postgres'),
       DATABASE_DIALECT: joi.string().default('postgres'),
       NODE_ENV: joi
         .string()
         .allow(['development', 'production', 'test'])
         .required(),
      PASSWORD: joi.string().default(null),
-     HOST: joi.string().required(),
+     HOST: joi.string().default('localhost'),
   })
   .unknown()
   .required();
@@ -25,6 +26,7 @@ if (error) {
 
 const config = {
   port: envVars.PORT || 8000,
+  databaseUrl: envVars.DATABASE_URL,
   database: envVars.DATABASE,
   username: envVars.DATABASE_USER,
   databaseDialect: envVars.DATABASE_DIALECT || 'postgres',
