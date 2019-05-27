@@ -4,7 +4,7 @@ const joi = require('joi');
 const envVarsSchema = joi
    .object({
       PORT: joi.number().default(8000),
-      DATABASE: joi.string().default('smsdb'),
+      DATABASE: joi.string().default('populationdb'),
       DATABASE_URL: joi.string().default(null),
       DATABASE_USER: joi.string().default('postgres'),
       DATABASE_DIALECT: joi.string().default('postgres'),

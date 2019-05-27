@@ -36,7 +36,7 @@ const database = {
   },
   test: {
     ...defaultConfig,
-    database: 'smstestdb',
+    database: 'populationtestdb',
   },
   production: {
     ...defaultConfig,

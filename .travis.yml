@@ -7,7 +7,7 @@ install:
   - npm install
   - npm install -g sequelize-cli
 before_script:
-  - psql -c 'create database smstestdb;' -U postgres
+  - psql -c 'create database populationtestdb;' -U postgres
 script:
   - npm run pretest
   - npm run test:coveralls
