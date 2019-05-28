@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     males: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
     females: {
       type: DataTypes.INTEGER,
       allowNull: false,
