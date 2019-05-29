@@ -11,5 +11,6 @@ router.get('/', swaggerUi.setup(swaggerDocument));
 
 router.get('/locations', controller.listLocations);
 router.post('/locations', controller.createLocations);
+router.get('/locations/:name', controller.getLocationByName);
 
 module.exports = router;

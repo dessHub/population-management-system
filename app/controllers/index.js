@@ -63,4 +63,13 @@ controller.createLocations = async(req, res) => {
   .catch(error => res.status(400).send(error));
 };
 
+// Get location by Id
+controller.getLocationByName = async (req, res) => {
+  const name = req.params.name;
+  const location = await getLocationByName(Location, name);
+  if(!location) return res.status(400).send({"message": "Location name does not exist."});
+
+  return res.status(200).send(location);
+};
+
 module.exports = controller;
