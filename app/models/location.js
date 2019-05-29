@@ -1,6 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Location = sequelize.define('Location', {
+     id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.STRING,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -9,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     males: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
     females: {
       type: DataTypes.INTEGER,
       allowNull: false,

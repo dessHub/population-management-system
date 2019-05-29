@@ -13,14 +13,14 @@
     "https"
   ],
   "paths": {
-    "/api/contacts": {
+    "/api/locations": {
       "post": {
         "tags": [
-          "contacts"
+          "locations"
         ],
-        "summary": "create a new contact",
+        "summary": "create a new location",
         "description": "",
-        "operationId": "createcontact",
+        "operationId": "createlocation",
         "consumes": [
           "application/json"
         ],
@@ -31,10 +31,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "creates a new contact",
+            "description": "creates a new location",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Contact"
+              "$ref": "#/definitions/Location"
             }
           }
         ],
@@ -46,39 +46,39 @@
       },
       "get": {
         "tags": [
-          "contacts"
+          "locations"
         ],
-        "summary": "retrieves all contacts in the database",
-        "description": "get all the contacts in the system",
+        "summary": "retrieves all locations in the database",
+        "description": "get all the locations in the system",
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "/definitions/Contact"
+                "$ref": "/definitions/Location"
               }
             }
           }
         }
       }
     },
-    "/api/contacts/{contactId}": {
+    "/api/locations/{locationName}": {
       "get": {
         "tags": [
-          "contacts"
+          "locations"
         ],
-        "summary": "Find contact by ID",
-        "description": "Returns a single contact",
-        "operationId": "getContactById",
+        "summary": "Find Location by name",
+        "description": "Returns a single location",
+        "operationId": "getLocationByName",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "contactId",
+            "name": "locationName",
             "in": "path",
-            "description": "ID of contact to return",
+            "description": "Name of location to return",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -88,29 +88,29 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/Contact"
+              "$ref": "#/definitions/Location"
             }
           },
           "404": {
-            "description": "Contact not found"
+            "description": "Location not found"
           },
           "422": {
-            "description": "Invalid ID supplied"
+            "description": "Invalid Name supplied"
           }
         }
       },
       "delete": {
         "tags": [
-          "contacts"
+          "locations"
         ],
-        "summary": "delete contact",
-        "description": "delete an sms with given id",
-        "operationId": "deleteContact",
+        "summary": "delete location",
+        "description": "delete a location with given name",
+        "operationId": "deleteLocation",
         "parameters": [
           {
-            "name": "contactId",
+            "name": "locationId",
             "in": "path",
-            "description": "ID of contact to delete",
+            "description": "ID of location to delete",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -121,7 +121,7 @@
             "description": "OK"
           },
           "404": {
-            "description": "contact not found"
+            "description": "location not found"
           },
           "422": {
             "description": "Invalid ID supplied"
@@ -129,14 +129,14 @@
         }
       }
     },
-    "/api/sms": {
+    "/api/locations/:id": {
       "post": {
         "tags": [
-          "sms"
+          "locations"
         ],
-        "summary": "Create a new message",
-        "description": "",
-        "operationId": "createSms",
+        "summary": "Update location",
+        "description": "ID to update",
+        "operationId": "updateLoation",
         "consumes": [
           "application/json"
         ],
@@ -147,10 +147,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Creating/sending a new message",
+            "description": "Updating location",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Sms"
+              "$ref": "#/definitions/Location"
             }
           }
         ],
@@ -159,123 +159,6 @@
             "description": "Bad request"
           }
         }
-      },
-      "get": {
-        "tags": [
-          "sms"
-        ],
-        "summary": "List all sms",
-        "description": "retrieves all the sms in the database",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Sms"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/sms/{smsId}": {
-      "get": {
-        "tags": [
-          "sms"
-        ],
-        "summary": "Get sms by ID",
-        "description": "Returns a single sms and update its status as received.",
-        "operationId": "getSmsById",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "smsId",
-            "in": "path",
-            "description": "Returns an sms based on the given ID",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Sms"
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Sms not found"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "sms"
-        ],
-        "summary": "delete sms",
-        "description": "delete an sms with given id",
-        "operationId": "deleteSms",
-        "parameters": [
-          {
-            "name": "smsId",
-            "in": "path",
-            "description": "ID of sms to delete",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Sms not found"
-          }
-        }
       }
     }
-  },
-  "definitions": {
-    "Contact": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "the name of phone owner"
-        },
-        "phone_number": {
-          "type": "string",
-          "description": "phone number"
-        }
-      }
-    },
-    "Sms": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "description": "message to be sent"
-        },
-        "sender": {
-          "type": "string",
-          "description": "the phone number of message sender"
-        },
-        "receiver": {
-          "type": "string",
-          "description": "the phone number of message recipient"
-        }
-      }
-    }
-  }
 }
