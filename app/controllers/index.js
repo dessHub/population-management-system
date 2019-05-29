@@ -1,5 +1,6 @@
-import models from '../models';
 import pushid from 'pushid';
+import sequelize from 'sequelize';
+import models from '../models';
 import { getLocationByName, validateBody, validateInteger } from '../helpers';
 
 const { Location } = models;
@@ -7,7 +8,14 @@ let controller = {};
 
 controller.listLocations = async(req, res) => {
   return await Location
-  .findAll()
+  .findAll({ 
+  attributes: [ 'id','name', 'males', 'females', 'parentLocation',
+    [ sequelize.literal(
+        'COALESCE(males, 0) + COALESCE(females, 0)'
+      ), 'total_population'
+    ]
+  ]
+})
   .then((locations) => {
     if(!locations.length){
       return res.status(400).send("No locations yet!");
