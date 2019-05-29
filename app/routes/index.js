@@ -10,5 +10,6 @@ router.use('/', swaggerUi.serve);
 router.get('/', swaggerUi.setup(swaggerDocument));
 
 router.get('/locations', controller.listLocations);
+router.post('/locations', controller.createLocations);
 
 module.exports = router;

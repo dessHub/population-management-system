@@ -10,7 +10,7 @@ export const getLocationByName = async (model, name) => {
   }
 }
 
-const validateBody = (requiredFields, payload) => {
+const validate = (requiredFields, payload) => {
   const errors = {}
   requiredFields.forEach(field => {
     if(!payload[field]){
@@ -22,9 +22,9 @@ const validateBody = (requiredFields, payload) => {
   return errors
 }
 
-export const validate = ( payload ) => {
+export const validateBody = ( payload ) => {
   const requiredFields = ['males', 'females', 'name'];
-  return validateBody(requiredFields, payload);
+  return validate(requiredFields, payload);
 };
 
 export const validateInteger = (input) => {
