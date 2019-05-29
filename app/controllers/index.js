@@ -76,7 +76,7 @@ controller.getLocationByName = async (req, res) => {
   const location = await getLocationByName(Location, name);
   if(!location) return res.status(400).send({"message": "Location name does not exist."});
 
-  return res.status(200).send(location);
+  return res.status(200).send({"message": "Created successfully", location});
 };
 
 // Update location
