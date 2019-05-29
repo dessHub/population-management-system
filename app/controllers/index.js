@@ -127,4 +127,22 @@ controller.updateLocation= async (req, res) => {
   .catch(error => res.status(404).send(error));
 };
 
+// Delete Location
+controller.deleteLocation = (req, res) => {
+  // check if location exist
+  // delete location if exist
+  const id = req.params.id;
+  return Location.findByPk(id)
+  .then(location => {
+    if(!location) return res.status(404).send({
+      "message": `Location with Id ${id} is not found!`
+    });
+
+    return location.destroy()
+    .then(() => res.status(404).send("Successfully deleted."))
+    .catch(error => res.status(400).send(error))
+  })
+  .catch(error => res.status(400).send(error))
+}
+
 module.exports = controller;
