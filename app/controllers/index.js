@@ -50,7 +50,6 @@ controller.createLocations = async(req, res) => {
   let payload = {};
   if(parentLocation){
     payload = {
-      id: pushid(),
       males,
       females,
       name,
@@ -58,15 +57,15 @@ controller.createLocations = async(req, res) => {
      }
   } else {
     payload = {
-      id: pushid(),
       males,
       females,
       name
     }
   }
+  const id = pushid();
 
   return await Location
-  .create(payload)
+  .create({id, ...payload})
   .then(location => res.status(201).send({"message": "location created successfully", location}))
   .catch(error => res.status(400).send(error));
 };
@@ -78,6 +77,54 @@ controller.getLocationByName = async (req, res) => {
   if(!location) return res.status(400).send({"message": "Location name does not exist."});
 
   return res.status(200).send(location);
+};
+
+// Update location
+controller.updateLocation= async (req, res) => {
+  const id = req.params.id;
+  const validate = validateBody(req.body);
+  if(Object.keys(validate).length){
+    return res.status(400).send(validate);
+  };
+
+  const males = req.body.males;
+  const females = req.body.females;
+  const name = req.body.name;
+  const parent_location = req.body.parentLocation;
+  if (!validateInteger(males)) return res.status(400).send({"message": "males should be digits"});
+  if (!validateInteger(females)) return res.status(400).send({"message": "females should be digits"});
+
+  let parentLocation = parent_location;
+  if(parent_location) {
+    const checkParentLocation = await getLocationByName(Location, parent_location);
+    if(!checkParentLocation) return res.status(400).send({"message": "Parent Location name does not exist."});
+    parentLocation = checkParentLocation.id;
+  }
+  let payload = {};
+  if(parentLocation){
+    payload = {
+      males,
+      females,
+      name,
+      parentLocation,
+     }
+  } else {
+    payload = {
+      males,
+      females,
+      name
+    }
+  }
+  return await Location.findByPk(id)
+  .then(location => {
+    if(location){
+      return location.update(payload)
+      .then(() => res.status(200).send({"message": "Updated successfully", location}))
+      .catch(error => res.status(400).send(error));
+    }
+    return res.status(404).send({"message": `Sms with ID ${id} is not found!`});
+  })
+  .catch(error => res.status(404).send(error));
 };
 
 module.exports = controller;
