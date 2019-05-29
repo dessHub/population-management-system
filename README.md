@@ -1,79 +1,73 @@
-[![Build Status](https://travis-ci.org/dessHub/SMS-Management-Application-API.svg?branch=develop)](https://travis-ci.org/dessHub/SMS-Management-Application-API)
+[![Build Status](https://travis-ci.org/dessHub/population-management-system.svg?branch=master)](https://travis-ci.org/dessHub/population-management-system)
 
-# SMS-Management-Application-API
-SMS Management Application API is a simple appliaction that enables users to send and receive text messages. 
+# Population-Management-Application-API
+Population Management Application API is a simple appliaction that enables users to create and populate a list of locations and the total number of residents in each location broken down by gender..
 
 
 **Technologies
  - [Nodejs](https://nodejs.org/) - Javascript runtime
  - [Express](https://expressjs.com/) - Express is a minimal and flexible Node.js web application framework.
  - [Postgres](https://www.postgresql.org/) - PostgreSQL is a powerful, open source object-relational database system.
+ - [Helmet](https://helmetjs.github.io/docs/) - Package to secure the API.
 
 **How to set up locally**
 * clone the repo
-     
-     `git clone https://github.com/dessHub/SMS-Management-Application-API.git`
-     
-* checkout to develop branch 
+
+     `git clone https://github.com/dessHub/population-management-system.git`
+
+* checkout to develop branch
 
      `git checkout develop`
-     
+
 * Install postgres and create database  both for development and testing
 * Copy `.env.example` to `.env` and update the values.
 * Install dependencies
 
      `npm install`
-     
+
 * Run database migrations
 
      `npm run db:migrate`
-     
-* start the application with 
+
+* start the application with
 
      `npm start`
-     
+
 * Run the tests
 
      `npm run test`
 
 **API features**
-* creating contacts
-* sending and recieving sms
+* creating locations
+* displaying locations
+* deleting location
+* updating location
+* get the location by name
 
 **Endpoints exposed by the API**
 
 
 Endpoint                    |  Functionality
- ------------------------   |   ------------------------ 
-GET /contacts               | get all contacts
-GET /contacts/:id           | get contact with the given id
-POST /contacts              | create contact
-DELETE /contacts/:id        | delete contact with the given id
-GET /sms                    | get all sms 
-GET /sms/:id                | get sms with the given id
-POST /sms                   | send an sms
-DELETE /sms/:id             | delete sms with the given id
-
+ ------------------------   |   ------------------------
+GET /locations              | get all locations
+GET /locations/:name        | get location with the given name
+POST /locations             | create location
+UPDATE /locations/:id       | update location with the given id
+DELETE /locations/:id       | delete location with the given id
 
 **Endpoint payload**
 
-* POST /contacts
+* POST /locations
 ```
 {
-  "name": "name",
-  "phone_number": "phone number"
+  "name": "locationName",
+  "males": "males count"
+  "females": "females count"
+  "parentLocation": "parent location"
 }
 ```
 
-* POST /sms
-** The sender and receiver contacts have to be existing for successful
-message sending**
+** The parentLocation have to be existing for successful
+locations creation**
 
-```
-{
-  "sender": "the phone number of the sender",
-  "receiver": "the phone number of message reciepient",
-  "message": "message to send"
-}
-```
 
